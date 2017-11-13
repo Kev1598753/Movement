@@ -1,6 +1,8 @@
 /// @description Insert description here
 // You can write your code in this editor
+//event_inherited();
 
+/// PARENT ////////////////////////////
 switch (keyboard_key)
 	{
 	case vk_left:
@@ -80,4 +82,26 @@ if (distanceToFood < 100)
 else
 {
 	hasEaten = false;
+}
+///////////////////////////////////////
+
+closestPredator = instance_nearest(x, y, obj_agent);
+
+var distanceToPredator = distance_to_object(closestPredator);
+if (distanceToPredator < 100)
+{
+		var direct = point_direction(closestPredator.x,closestPredator.y,x,y);
+		
+		if (abs(direct - direction) > 180) direct += 360;
+		var adjustment = ((direction*0.9) + ((direct + direction) / 2)*0.1);
+	
+		direction = adjustment;
+		image_angle = adjustment;
+}
+
+if (distanceToPredator < 20)
+{
+		closestPredator.life += 5;
+		
+		instance_destroy();
 }
